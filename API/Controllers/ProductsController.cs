@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Abstraction;
 using Application.Repositories.Products;
+using Domain.Entitites;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -23,15 +24,22 @@ namespace API.Controllers
         [HttpGet]
         public async Task Get()
         {
-            await _productWriteRepository.AddRangeAsync(new()
-            {
-                new() { Id = Guid.NewGuid(), Name = "Product 1", Price = 100, CreatedDate = DateTime.Now, Stock = 10},
-                new() { Id = Guid.NewGuid(), Name = "Product 2", Price = 200, CreatedDate = DateTime.Now, Stock = 20},
-                new() { Id = Guid.NewGuid(), Name = "Product 3", Price = 300, CreatedDate = DateTime.Now, Stock = 30},
-                new() { Id = Guid.NewGuid(), Name = "Product 4", Price = 400, CreatedDate = DateTime.Now, Stock = 40},
-                new() { Id = Guid.NewGuid(), Name = "Product 5", Price = 500, CreatedDate = DateTime.Now, Stock = 50}
-            });
-            var count = await _productWriteRepository.SaveAsync();
+            _productReadRepository.GetAll();
+           
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            Product product = await _productReadRepository.GetByIdAsync(id);
+            return Ok(product);
+        }
+
+        [HttpPost]
+        public async Task Add() 
+        {
+            await _productWriteRepository.AddAsync(new() {Name = "New Product test", Price = 15.00f, Stock = 10});
+            await _productWriteRepository.SaveAsync();
         }
     }
 }
