@@ -20,7 +20,7 @@ export class ToastrOptions {
 }
 
 export enum ToastrMessageType {
-  Success = "error",
+  Success = "success",
   Info = "info",
   Warning = "warning",
   Error = "error"
