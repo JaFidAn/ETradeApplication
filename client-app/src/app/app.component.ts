@@ -10,6 +10,4 @@ export class AppComponent {
   title = 'client-app';
 }
 
-$(document).ready(() => {
-  alert("Salam")
-})
+
