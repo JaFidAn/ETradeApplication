@@ -20,7 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
     AdminModule,
     UiModule,
     BrowserAnimationsModule,
-    ToastrModule
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
