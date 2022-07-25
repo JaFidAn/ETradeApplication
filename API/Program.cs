@@ -1,3 +1,6 @@
+using Application.Validators.FluentValidation.Products;
+using FluentValidation.AspNetCore;
+using Infrastructure.Filters;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,10 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistenceServices(builder.Configuration);
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => 
-    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()
+    policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod()
 ));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
+    .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateProductValidator>())
+    .ConfigureApiBehaviorOptions(opt => opt.SuppressModelStateInvalidFilter = true);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

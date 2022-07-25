@@ -32,6 +32,12 @@ export class CreateComponent extends BaseComponent implements OnInit {
         messageType: MessageType.Success,
         messagePosition: MessagePosition.TopRight
       });
+    }, (errorMessage: string) => {
+      this.alertify.message(errorMessage, 
+        {
+          messageType: MessageType.Error,
+          messagePosition: MessagePosition.TopRight
+        })
     });
   } 
 }
