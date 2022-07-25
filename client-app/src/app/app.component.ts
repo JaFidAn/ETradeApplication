@@ -11,10 +11,7 @@ export class AppComponent {
   title = 'client-app';
 
   constructor(private toastrService: CustomToastrService) {
-    toastrService.message("Salam", "Rasim", {
-      messageType: ToastrMessageType.Info,
-      toastrMessagePosition: ToastrMessagePosition.TopRight
-    })
+    
   }
 
 }
