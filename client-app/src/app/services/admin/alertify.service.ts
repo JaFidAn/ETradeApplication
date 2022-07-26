@@ -17,9 +17,9 @@ export class AlertifyService {
 }
 
 export class ALertifyOptions {
-  messageType: MessageType = MessageType.Message
-  messagePosition: MessagePosition = MessagePosition.BottomRight
-  delay?: number = 3
+  messageType: MessageType
+  messagePosition: MessagePosition
+  delay?: number
 }
 
 export enum MessageType {

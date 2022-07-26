@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Abstraction;
 using Application.Repositories.Products;
+using Application.RequestParameters;
 using Application.ViewModels.Products;
 using Domain.Entitites;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +24,25 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery]Pagination pagination)
         {
-            var result = _productReadRepository.GetAll(false);
-            return Ok(result);
+            var totalCount = _productReadRepository.GetAll(false).Count();
+
+            var products = _productReadRepository.GetAll(false).Select(p => new 
+            {
+                p.Id,
+                p.Name,
+                p.Stock,
+                p.Price,
+                p.CreatedDate,
+                p.UpdatedDate
+            }).Skip(pagination.Page * pagination.Size).Take(pagination.Size).ToList();
+
+            return Ok(new 
+            {
+                totalCount,
+                products
+            });
            
         }
 
