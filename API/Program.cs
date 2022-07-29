@@ -1,3 +1,4 @@
+using Application;
 using Application.Validators.FluentValidation.Products;
 using FluentValidation.AspNetCore;
 using Infrastructure.Filters;
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => 
     policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod()
